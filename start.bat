@@ -1,6 +1,6 @@
 @echo off
 echo ========================================
-echo    Iniciando PsicoKids
+echo    Iniciando ARENYS CONTIGO 
 echo ========================================
 echo.
 

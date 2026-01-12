@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "========================================"
-echo "   Iniciando PsicoKids"
+echo "   Iniciando ARENYS CONTIGO "
 echo "========================================"
 echo ""
 

@@ -13,7 +13,7 @@ Todas las imágenes deben ir en: `frontend/src/assets/images/`
 4. **juegos-educativos.png** - Icono de juegos (recomendado: 100x100px)
 5. **consejos-padres.png** - Icono de consejos (recomendado: 100x100px)
 6. **area-profesional.png** - Icono de área profesional (recomendado: 100x100px)
-7. **logo.png** - Logo de PsicoKids (recomendado: 200x50px)
+7. **logo.png** - Logo de ARENYS CONTIGO  (recomendado: 200x50px)
 
 ### Zona Niños
 1. **progreso.png** - Icono de gráfico (recomendado: 80x80px)

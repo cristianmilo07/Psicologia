@@ -12,6 +12,6 @@ import { CommonModule } from '@angular/common';
   styles: []
 })
 export class AppComponent {
-  title = 'PsicoKids';
+  title = 'ARENYS CONTIGO ';
 }
 

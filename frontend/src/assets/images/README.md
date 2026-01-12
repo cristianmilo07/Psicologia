@@ -1,4 +1,4 @@
-# Imágenes para PsicoKids
+# Imágenes para ARENYS CONTIGO 
 
 Coloca aquí las siguientes imágenes:
 
@@ -9,7 +9,7 @@ Coloca aquí las siguientes imágenes:
 - `juegos-educativos.png` - Icono de juegos educativos
 - `consejos-padres.png` - Icono de consejos
 - `area-profesional.png` - Icono de área profesional
-- `logo.png` - Logo de PsicoKids
+- `logo.png` - Logo de ARENYS CONTIGO 
 
 ## Zona Niños
 - `progreso.png` - Icono de gráfico de progreso

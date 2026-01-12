@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "psicokids": {
+    "ARENYS CONTIGO ": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/psicokids",
+            "outputPath": "dist/ARENYS CONTIGO ",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "psicokids:build:production"
+              "buildTarget": "ARENYS CONTIGO :build:production"
             },
             "development": {
-              "buildTarget": "psicokids:build:development"
+              "buildTarget": "ARENYS CONTIGO :build:development"
             }
           },
           "defaultConfiguration": "development"

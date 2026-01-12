@@ -15,8 +15,8 @@
       <a routerLink="/dashboard" class="home-link">Home</a>
     </div>
     <div class="header-center">
-      <img src="assets/images/logo.png" alt="PsicoKids" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-      <h1 class="main-logo fallback" style="display: none;">-PsicoKids-</h1>
+      <img src="assets/images/logo.png" alt="ARENYS CONTIGO " class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <h1 class="main-logo fallback" style="display: none;">- ARENYS CONTIGO -</h1>
     </div>
     <div class="header-right">
       <span class="icon">💬</span>
@@ -120,7 +120,12 @@
           <h2>Información Médica</h2>
           <div class="form-group">
             <label for="motivoConsulta">Motivo de Consulta *</label>
-            <textarea id="motivoConsulta" formControlName="motivoConsulta" rows="3" placeholder="Describa el motivo de la consulta"></textarea>
+            <div class="textarea-container">
+              <textarea id="motivoConsulta" formControlName="motivoConsulta" rows="3" placeholder="Describa el motivo de la consulta"></textarea>
+              <button type="button" class="btn-mic" (click)="toggleSpeechRecognition('motivoConsulta')" [class.listening]="isListening">
+                🎤
+              </button>
+            </div>
           </div>
           <div class="form-group">
             <label for="antecedentesMedicos">Antecedentes Médicos</label>

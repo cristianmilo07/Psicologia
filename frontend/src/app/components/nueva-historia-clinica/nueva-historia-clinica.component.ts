@@ -17,6 +17,8 @@ export class NuevaHistoriaClinicaComponent {
   historiaClinicaForm: FormGroup;
   showModal: boolean = false;
   selectedFiles: File[] = [];
+  recognition: any;
+  isListening: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -25,6 +27,31 @@ export class NuevaHistoriaClinicaComponent {
     private http: HttpClient
   ) {
     this.user = this.authService.getCurrentUser();
+
+    // Initialize speech recognition
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      this.recognition = new SpeechRecognition();
+      this.recognition.continuous = false;
+      this.recognition.interimResults = false;
+      this.recognition.lang = 'es-ES'; // Spanish
+
+      this.recognition.onresult = (event: any) => {
+        const transcript = event.results[0][0].transcript;
+        this.appendToField(transcript);
+      };
+
+      this.recognition.onend = () => {
+        this.isListening = false;
+      };
+
+      this.recognition.onerror = (event: any) => {
+        console.error('Speech recognition error:', event.error);
+        this.isListening = false;
+      };
+    } else {
+      console.warn('Speech recognition not supported in this browser');
+    }
     this.historiaClinicaForm = this.fb.group({
       nombrePaciente: ['', Validators.required],
       fechaNacimiento: ['', Validators.required],
@@ -89,6 +116,28 @@ export class NuevaHistoriaClinicaComponent {
 
   removeFile(index: number) {
     this.selectedFiles.splice(index, 1);
+  }
+
+  toggleSpeechRecognition(fieldName: string) {
+    if (!this.recognition) {
+      alert('Speech recognition not supported in this browser');
+      return;
+    }
+
+    if (this.isListening) {
+      this.recognition.stop();
+      this.isListening = false;
+    } else {
+      (this.recognition as any).fieldName = fieldName; // Store which field to update
+      this.recognition.start();
+      this.isListening = true;
+    }
+  }
+
+  appendToField(transcript: string) {
+    const fieldName = (this.recognition as any).fieldName;
+    const currentValue = this.historiaClinicaForm.get(fieldName)?.value || '';
+    this.historiaClinicaForm.get(fieldName)?.setValue(currentValue + ' ' + transcript);
   }
 
   onSubmit() {

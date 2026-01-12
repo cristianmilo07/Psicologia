@@ -1,7 +1,7 @@
 {
-  "name": "psicokids-backend",
+  "name": "ARENYS CONTIGO -backend",
   "version": "1.0.0",
-  "description": "Backend para PsicoKids",
+  "description": "Backend para ARENYS CONTIGO ",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

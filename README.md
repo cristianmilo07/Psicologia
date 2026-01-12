@@ -1,4 +1,4 @@
-# PsicoKids - Plataforma de Psicología Infantil
+# ARENYS CONTIGO  - Plataforma de Psicología Infantil
 
 Plataforma web completa para el seguimiento y desarrollo emocional de niños, con áreas dedicadas para niños, padres y profesionales.
 
