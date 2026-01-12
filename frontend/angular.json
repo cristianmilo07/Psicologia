@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ARENYS CONTIGO ": {
+    "arenys-contigo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ARENYS CONTIGO ",
+            "outputPath": "dist/arenys-contigo",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ARENYS CONTIGO :build:production"
+              "buildTarget": "arenys-contigo:build:production"
             },
             "development": {
-              "buildTarget": "ARENYS CONTIGO :build:development"
+              "buildTarget": "arenys-contigo:build:development"
             }
           },
           "defaultConfiguration": "development"

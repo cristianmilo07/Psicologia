@@ -1,0 +1,28 @@
+<div class="background-decoration" *ngIf="showBackground">
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+  <div class="star star-1">⭐</div>
+  <div class="star star-2">⭐</div>
+  <div class="star star-3">⭐</div>
+  <div class="rainbow"></div>
+</div>
+
+<header class="main-header">
+  <div class="header-left">
+    <span class="star-icon">⭐</span>
+    <a routerLink="/dashboard" class="home-link">Home</a>
+  </div>
+  <div class="header-center">
+    <img src="assets/images/logo.png" alt="ARENYS CONTIGO" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+    <h1 class="main-logo fallback" style="display: none;">{{ title }}</h1>
+  </div>
+  <div class="header-right">
+    <div class="dropdown">
+      <select class="dropdown-select" (change)="onSelectChange($event)">
+        <option value="">{{ user?.name || 'Usuario' }}</option>
+        <option value="logout">Cerrar Sesión</option>
+      </select>
+    </div>
+  </div>
+</header>

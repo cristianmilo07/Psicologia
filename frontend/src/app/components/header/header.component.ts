@@ -1,21 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { HeaderComponent } from '../header/header.component';
 
 @Component({
-  selector: 'app-zona-profesional',
+  selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink, HeaderComponent],
-  templateUrl: './zona-profesional.component.html',
-  styleUrls: ['./zona-profesional.component.scss']
+  imports: [CommonModule, RouterLink],
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss']
 })
-export class ZonaProfesionalComponent {
+export class HeaderComponent {
+  @Input() title: string = 'ARENYS CONTIGO';
+  @Input() showBackground: boolean = true;
+
+  user: any = null;
+
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+    this.user = this.authService.getCurrentUser();
+  }
 
   logout() {
     this.authService.logout();
@@ -28,4 +34,3 @@ export class ZonaProfesionalComponent {
     }
   }
 }
-
