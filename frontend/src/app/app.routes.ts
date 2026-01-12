@@ -59,6 +59,21 @@ export const routes: Routes = [
     path: 'editar-historia-clinica/:id',
     loadComponent: () => import('./components/editar-historia-clinica/editar-historia-clinica.component').then(m => m.EditarHistoriaClinicaComponent),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'reportes-emocionales',
+    loadComponent: () => import('./components/reportes-emocionales/reportes-emocionales.component').then(m => m.ReportesEmocionalesComponent),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'lista-reportes-emocionales',
+    loadComponent: () => import('./components/lista-reportes-emocionales/lista-reportes-emocionales.component').then(m => m.ListaReportesEmocionalesComponent),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'ver-reporte-emocional/:id',
+    loadComponent: () => import('./components/ver-reporte-emocional/ver-reporte-emocional.component').then(m => m.VerReporteEmocionalComponent),
+    canActivate: [AuthGuard]
   }
 ];
 

@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const historiasRoutes = require('./routes/historias');
+const reportesEmocionalesRoutes = require('./routes/reportes-emocionales');
 const bcrypt = require('bcryptjs');
 const User = require('./models/User');
 
@@ -48,6 +49,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/historias', historiasRoutes);
+app.use('/api/reportes-emocionales', reportesEmocionalesRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
