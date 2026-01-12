@@ -137,6 +137,12 @@
 
     .star-icon {
       font-size: 24px;
+
+      img {
+        height: 30px;
+        width: auto;
+        object-fit: contain;
+      }
     }
 
     .home-link {
@@ -149,7 +155,7 @@
 
   .header-center {
     .logo-image {
-      height: 50px;
+      height: 70px;
       width: auto;
       object-fit: contain;
     }

@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  @Input() title: string = 'ARENYS CONTIGO';
+  @Input() title: string = 'Carolina Psicóloga';
   @Input() showBackground: boolean = true;
 
   user: any = null;

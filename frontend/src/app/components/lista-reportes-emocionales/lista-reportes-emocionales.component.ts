@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { ReportesEmocionalesService, ReporteEmocional } from '../../services/reportes-emocionales.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-lista-reportes-emocionales',
@@ -13,11 +14,15 @@ import { ReportesEmocionalesService, ReporteEmocional } from '../../services/rep
 export class ListaReportesEmocionalesComponent implements OnInit {
   reportes: ReporteEmocional[] = [];
   loading = true;
+  user: any = null;
 
   constructor(
     private reportesService: ReportesEmocionalesService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private authService: AuthService
+  ) {
+    this.user = this.authService.getCurrentUser();
+  }
 
   ngOnInit() {
     this.cargarReportes();
@@ -52,6 +57,17 @@ export class ListaReportesEmocionalesComponent implements OnInit {
           alert('Error al eliminar el reporte');
         }
       });
+    }
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  onSelectChange(event: Event) {
+    const target = event.target as HTMLSelectElement;
+    if (target.value === 'logout') {
+      this.logout();
     }
   }
 }

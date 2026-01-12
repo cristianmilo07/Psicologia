@@ -1,0 +1,83 @@
+<div class="zona-container">
+  <div class="background-decoration">
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="star star-1">⭐</div>
+    <div class="star star-2">⭐</div>
+  </div>
+
+  <header class="section-header">
+    <div class="header-left">
+      <span class="star-icon"><img src="assets/images/logoCarolinaPsicologa.png" alt="Logo Carolina Psicóloga" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"></span>
+      <a routerLink="/zona-profesional" class="back-link">← Volver</a>
+    </div>
+    <div class="header-center">
+      <h1 class="section-title">Atenciones Grupales</h1>
+    </div>
+    <div class="header-right">
+      <div class="dropdown">
+        <select class="dropdown-select" (change)="onSelectChange($event)">
+          <option value="">Usuario</option>
+          <option value="logout">Cerrar Sesión</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="welcome-section">
+      <h2 class="welcome-title">
+        Atenciones Grupales – Psicología Escolar
+        <span class="title-star">⭐</span>
+      </h2>
+      <p class="welcome-subtitle">Las atenciones grupales fortalecen el bienestar emocional y la convivencia escolar.</p>
+      <div class="month-selector">
+        <label for="mes">Mes:</label>
+        <select id="mes" [(ngModel)]="selectedMonth" (change)="onMonthChange()">
+          <option *ngFor="let mes of meses" [value]="mes.value">{{ mes.label }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="summary-section">
+      <div class="summary-cards">
+        <div class="summary-card" *ngFor="let grado of atencionesPorGrado">
+          <h3>{{ grado.grado }}</h3>
+          <p>Se realizaron {{ grado.total }} atenciones grupales</p>
+          <p>📅 Días: {{ grado.dias.join(', ') }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-section">
+      <h3>Gráfica de Atenciones Grupales</h3>
+      <div class="chart-container">
+        <div class="bar-chart">
+          <div class="bar" *ngFor="let grado of atencionesPorGrado; let i = index">
+            <div class="bar-label">{{ grado.grado }}</div>
+            <div class="bar-visual" [style.width.%]="(grado.total / maxAtenciones) * 100">
+              <span class="bar-value">{{ grado.total }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="details-section">
+      <h3>Detalle por Grado</h3>
+      <div class="grade-details">
+        <div class="grade-card" *ngFor="let grado of atencionesPorGrado">
+          <div class="grade-header" (click)="toggleDetails(grado)">
+            <h4>{{ grado.grado }}</h4>
+            <span class="toggle-icon">{{ grado.expanded ? '▼' : '▶' }}</span>
+          </div>
+          <div class="grade-content" *ngIf="grado.expanded">
+            <div class="session-item" *ngFor="let dia of grado.dias">
+              <p>📅 {{ dia }} de {{ selectedMonthLabel }} – Sesión de terapia grupal</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

@@ -74,6 +74,12 @@ export const routes: Routes = [
     path: 'ver-reporte-emocional/:id',
     loadComponent: () => import('./components/ver-reporte-emocional/ver-reporte-emocional.component').then(m => m.VerReporteEmocionalComponent),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'atenciones-grupales',
+    loadComponent: () => import('./components/zona-profesional/atenciones-grupales/atenciones-grupales.component').then(m => m.AtencionesGrupalesComponent),
+    canActivate: [AuthGuard]
   }
+  
 ];
 

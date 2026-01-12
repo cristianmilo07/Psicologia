@@ -1,5 +1,13 @@
 @import '../zona-ninos/zona-ninos.component.scss';
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 
+.zona-container {
+  min-height: 100vh;
+  padding: 20px;
+  position: relative;
+  overflow-x: hidden;
+  font-family: 'Fredoka One', cursive;
+}
 .section-header {
   display: flex;
   justify-content: space-between;
