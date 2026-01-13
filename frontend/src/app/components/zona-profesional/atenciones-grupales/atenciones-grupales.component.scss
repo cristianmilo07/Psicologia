@@ -210,6 +210,23 @@
         background: var(--primary-red);
       }
     }
+
+    .pdf-button {
+      padding: 8px 16px;
+      background: #27AE60;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-left: 10px;
+
+      &:hover {
+        background: #2ECC71;
+      }
+    }
   }
 }
 
@@ -390,24 +407,70 @@
   }
 }
 
-.form-section {
-  margin-bottom: 40px;
+// Modal Styles
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
 
-  .form-container {
+  .modal-content {
     background: white;
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     max-width: 800px;
-    margin: 0 auto;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideIn 0.3s ease-out;
 
-    h3 {
-      color: var(--primary-blue);
-      margin-bottom: 20px;
-      text-align: center;
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px 30px 15px;
+      border-bottom: 2px solid #F8F9FA;
+
+      h3 {
+        color: var(--primary-blue);
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 800;
+      }
+
+      .close-button {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        color: #95A5A6;
+        cursor: pointer;
+        padding: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+
+        &:hover {
+          background: #F8F9FA;
+          color: var(--primary-red);
+          transform: scale(1.1);
+        }
+      }
     }
 
     .atencion-form {
+      padding: 0 30px 30px;
+
       .form-row {
         display: flex;
         gap: 20px;
@@ -425,67 +488,191 @@
           display: block;
           font-weight: 600;
           color: #2C3E50;
-          margin-bottom: 5px;
+          margin-bottom: 8px;
+          font-size: 1rem;
         }
 
         input, select, textarea {
           width: 100%;
-          padding: 10px;
+          padding: 12px 15px;
           border: 2px solid #E0E0E0;
-          border-radius: 10px;
+          border-radius: 12px;
           font-family: 'Fredoka One', cursive;
           font-size: 1rem;
+          transition: border-color 0.3s, box-shadow 0.3s;
 
           &:focus {
             outline: none;
             border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
           }
         }
 
         textarea {
           resize: vertical;
           min-height: 80px;
+          font-family: 'Fredoka One', cursive;
+        }
+
+        select {
+          cursor: pointer;
         }
       }
 
       .form-actions {
         display: flex;
-        gap: 10px;
+        gap: 15px;
         justify-content: center;
+        margin-top: 30px;
 
         .save-button {
-          padding: 12px 24px;
-          background: var(--primary-blue);
+          padding: 14px 28px;
+          background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-red) 100%);
           color: white;
           border: none;
-          border-radius: 10px;
+          border-radius: 12px;
           font-family: 'Fredoka One', cursive;
           font-size: 1.1rem;
+          font-weight: 600;
           cursor: pointer;
-          transition: background 0.3s;
+          transition: all 0.3s;
+          box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
 
           &:hover {
-            background: var(--primary-red);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+          }
+
+          &:active {
+            transform: translateY(0);
           }
         }
 
         .cancel-button {
-          padding: 12px 24px;
+          padding: 14px 28px;
           background: #95A5A6;
           color: white;
           border: none;
-          border-radius: 10px;
+          border-radius: 12px;
           font-family: 'Fredoka One', cursive;
           font-size: 1.1rem;
+          font-weight: 600;
           cursor: pointer;
-          transition: background 0.3s;
+          transition: all 0.3s;
 
           &:hover {
             background: #7F8C8D;
+            transform: translateY(-2px);
+          }
+
+          &:active {
+            transform: translateY(0);
           }
         }
       }
     }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+// Notification Modal Styles
+.notification-modal {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 2000;
+  animation: slideInFromRight 0.5s ease-out;
+
+  &.success {
+    .notification-content {
+      background: linear-gradient(135deg, #27AE60 0%, #2ECC71 100%);
+      border-left: 4px solid #27AE60;
+    }
+  }
+
+  &.error {
+    .notification-content {
+      background: linear-gradient(135deg, #E74C3C 0%, #C0392B 100%);
+      border-left: 4px solid #E74C3C;
+    }
+  }
+
+  .notification-content {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    min-width: 350px;
+    max-width: 500px;
+    color: white;
+    font-family: 'Fredoka One', cursive;
+    position: relative;
+
+    .notification-icon {
+      font-size: 1.5rem;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+
+    .notification-message {
+      flex: 1;
+      font-size: 1rem;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .notification-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0;
+      margin-left: 15px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+      flex-shrink: 0;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
@@ -503,10 +690,59 @@
   .month-selector {
     flex-direction: column;
     gap: 15px;
+
+    .pdf-button {
+      margin-left: 0;
+      margin-top: 10px;
+      width: 100%;
+    }
   }
 
-  .form-section .form-container .atencion-form .form-row {
-    flex-direction: column;
-    gap: 0;
+  .modal-overlay .modal-content {
+    width: 95%;
+    margin: 20px;
+
+    .modal-header {
+      padding: 20px 20px 10px;
+
+      h3 {
+        font-size: 1.5rem;
+      }
+
+      .close-button {
+        width: 35px;
+        height: 35px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .atencion-form {
+      padding: 0 20px 20px;
+
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .form-actions {
+        flex-direction: column;
+
+        .save-button, .cancel-button {
+          width: 100%;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+
+  .notification-modal {
+    left: 10px;
+    right: 10px;
+    top: 10px;
+
+    .notification-content {
+      min-width: auto;
+      max-width: none;
+    }
   }
 }

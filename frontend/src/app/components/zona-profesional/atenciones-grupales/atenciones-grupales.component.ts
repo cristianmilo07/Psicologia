@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { AtencionesGrupalesService, AtencionGrupal } from '../../../services/atenciones-grupales.service';
+import html2pdf from 'html2pdf.js';
 
 @Component({
   selector: 'app-atenciones-grupales',
@@ -33,6 +34,11 @@ export class AtencionesGrupalesComponent implements OnInit {
   showForm = false;
   maxAtenciones = 0;
   loading = false;
+
+  // Notification modal
+  showNotification = false;
+  notificationMessage = '';
+  notificationType: 'success' | 'error' = 'success';
 
   nuevaAtencion: Omit<AtencionGrupal, '_id' | 'createdBy' | 'createdAt' | 'updatedAt'> = {
     grado: 'Preescolar',
@@ -151,13 +157,13 @@ export class AtencionesGrupalesComponent implements OnInit {
 
   guardarAtencion() {
     if (!this.nuevaAtencion.fecha || !this.nuevaAtencion.tema || !this.nuevaAtencion.numeroParticipantes) {
-      alert('Por favor complete todos los campos obligatorios');
+      this.showNotificationModal('Por favor complete todos los campos obligatorios', 'error');
       return;
     }
 
     this.atencionesService.crearAtencion(this.nuevaAtencion).subscribe({
       next: (response) => {
-        alert('Atención grupal guardada exitosamente');
+        this.showNotificationModal('¡Atención grupal guardada exitosamente! 🎉', 'success');
         this.showForm = false;
 
         // Update selected month to match the saved date's month/year
@@ -174,8 +180,54 @@ export class AtencionesGrupalesComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error saving atencion:', error);
-        alert('Error al guardar la atención grupal');
+        this.showNotificationModal('Error al guardar la atención grupal 😔', 'error');
       }
+    });
+  }
+
+  showNotificationModal(message: string, type: 'success' | 'error') {
+    this.notificationMessage = message;
+    this.notificationType = type;
+    this.showNotification = true;
+
+    // Auto-hide after 4 seconds
+    setTimeout(() => {
+      this.showNotification = false;
+    }, 4000);
+  }
+
+  closeNotification() {
+    this.showNotification = false;
+  }
+
+  descargarPDF() {
+    const element = document.querySelector('.main-content') as HTMLElement;
+    if (!element) return;
+
+    const selectedMonthLabel = this.meses.find(m => m.value === this.selectedMonth)?.label || 'Mes';
+
+    const opt = {
+      margin: 1,
+      filename: `atenciones-grupales-${selectedMonthLabel.toLowerCase().replace(' ', '-')}.pdf`,
+      image: { type: 'jpeg' as const, quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' as const }
+    };
+
+    // Hide elements that shouldn't be in PDF
+    const addButton = document.querySelector('.add-button') as HTMLElement;
+    const notificationModal = document.querySelector('.notification-modal') as HTMLElement;
+    const formModal = document.querySelector('.modal-overlay') as HTMLElement;
+
+    if (addButton) addButton.style.display = 'none';
+    if (notificationModal) notificationModal.style.display = 'none';
+    if (formModal) formModal.style.display = 'none';
+
+    html2pdf().set(opt).from(element).save().then(() => {
+      // Restore hidden elements
+      if (addButton) addButton.style.display = '';
+      if (notificationModal) notificationModal.style.display = '';
+      if (formModal) formModal.style.display = '';
     });
   }
 
