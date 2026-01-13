@@ -6,6 +6,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const historiasRoutes = require('./routes/historias');
 const reportesEmocionalesRoutes = require('./routes/reportes-emocionales');
+const atencionesGrupalesRoutes = require('./routes/atenciones-grupales');
 const bcrypt = require('bcryptjs');
 const User = require('./models/User');
 
@@ -50,6 +51,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/historias', historiasRoutes);
 app.use('/api/reportes-emocionales', reportesEmocionalesRoutes);
+app.use('/api/atenciones-grupales', atencionesGrupalesRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

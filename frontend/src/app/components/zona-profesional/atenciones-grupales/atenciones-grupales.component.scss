@@ -194,6 +194,22 @@
       font-size: 1rem;
       cursor: pointer;
     }
+
+    .add-button {
+      padding: 8px 16px;
+      background: var(--primary-blue);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+
+      &:hover {
+        background: var(--primary-red);
+      }
+    }
   }
 }
 
@@ -343,6 +359,136 @@
   }
 }
 
+.no-data-message {
+  text-align: center;
+  padding: 40px 20px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  max-width: 500px;
+
+  p {
+    margin: 10px 0;
+    color: #34495E;
+    font-size: 1.1rem;
+
+    &:first-child {
+      font-weight: 600;
+      color: var(--primary-blue);
+    }
+  }
+}
+
+.loading-section {
+  text-align: center;
+  padding: 40px 20px;
+
+  p {
+    color: #34495E;
+    font-size: 1.1rem;
+  }
+}
+
+.form-section {
+  margin-bottom: 40px;
+
+  .form-container {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+
+    h3 {
+      color: var(--primary-blue);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .atencion-form {
+      .form-row {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+
+        .form-group {
+          flex: 1;
+        }
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+
+        label {
+          display: block;
+          font-weight: 600;
+          color: #2C3E50;
+          margin-bottom: 5px;
+        }
+
+        input, select, textarea {
+          width: 100%;
+          padding: 10px;
+          border: 2px solid #E0E0E0;
+          border-radius: 10px;
+          font-family: 'Fredoka One', cursive;
+          font-size: 1rem;
+
+          &:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+          }
+        }
+
+        textarea {
+          resize: vertical;
+          min-height: 80px;
+        }
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+
+        .save-button {
+          padding: 12px 24px;
+          background: var(--primary-blue);
+          color: white;
+          border: none;
+          border-radius: 10px;
+          font-family: 'Fredoka One', cursive;
+          font-size: 1.1rem;
+          cursor: pointer;
+          transition: background 0.3s;
+
+          &:hover {
+            background: var(--primary-red);
+          }
+        }
+
+        .cancel-button {
+          padding: 12px 24px;
+          background: #95A5A6;
+          color: white;
+          border: none;
+          border-radius: 10px;
+          font-family: 'Fredoka One', cursive;
+          font-size: 1.1rem;
+          cursor: pointer;
+          transition: background 0.3s;
+
+          &:hover {
+            background: #7F8C8D;
+          }
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .section-header {
     flex-direction: column;
@@ -352,5 +498,15 @@
 
   .welcome-title {
     font-size: 2rem;
+  }
+
+  .month-selector {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .form-section .form-container .atencion-form .form-row {
+    flex-direction: column;
+    gap: 0;
   }
 }

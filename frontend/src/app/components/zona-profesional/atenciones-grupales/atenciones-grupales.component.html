@@ -36,26 +36,83 @@
         <select id="mes" [(ngModel)]="selectedMonth" (change)="onMonthChange()">
           <option *ngFor="let mes of meses" [value]="mes.value">{{ mes.label }}</option>
         </select>
+        <button class="add-button" (click)="toggleForm()">+ Agregar Atención</button>
       </div>
     </div>
 
-    <div class="summary-section">
-      <div class="summary-cards">
+    <div class="form-section" *ngIf="showForm">
+      <div class="form-container">
+        <h3>Registrar Nueva Atención Grupal</h3>
+        <form class="atencion-form" (ngSubmit)="guardarAtencion()">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="grado">Grado:</label>
+              <select id="grado" [(ngModel)]="nuevaAtencion.grado" name="grado" required>
+                <option *ngFor="let grado of grados" [value]="grado">{{ grado }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="fecha">Fecha:</label>
+              <input type="date" id="fecha" [(ngModel)]="nuevaAtencion.fecha" name="fecha" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tema">Tema:</label>
+              <input type="text" id="tema" [(ngModel)]="nuevaAtencion.tema" name="tema" placeholder="Tema de la sesión" required>
+            </div>
+            <div class="form-group">
+              <label for="numeroParticipantes">Número de Participantes:</label>
+              <input type="number" id="numeroParticipantes" [(ngModel)]="nuevaAtencion.numeroParticipantes" name="numeroParticipantes" min="1" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="objetivos">Objetivos:</label>
+            <textarea id="objetivos" [(ngModel)]="nuevaAtencion.objetivos" name="objetivos" placeholder="Objetivos de la sesión"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="actividades">Actividades:</label>
+            <textarea id="actividades" [(ngModel)]="nuevaAtencion.actividades" name="actividades" placeholder="Actividades realizadas"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="observaciones">Observaciones:</label>
+            <textarea id="observaciones" [(ngModel)]="nuevaAtencion.observaciones" name="observaciones" placeholder="Observaciones adicionales"></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="save-button">Guardar</button>
+            <button type="button" class="cancel-button" (click)="toggleForm()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="summary-section" *ngIf="!loading">
+      <div class="summary-cards" *ngIf="atencionesPorGrado.length > 0; else noData">
         <div class="summary-card" *ngFor="let grado of atencionesPorGrado">
           <h3>{{ grado.grado }}</h3>
           <p>Se realizaron {{ grado.total }} atenciones grupales</p>
           <p>📅 Días: {{ grado.dias.join(', ') }}</p>
         </div>
       </div>
+      <ng-template #noData>
+        <div class="no-data-message">
+          <p>No hay atenciones grupales registradas para este mes.</p>
+          <p>¡Agrega la primera sesión grupal!</p>
+        </div>
+      </ng-template>
     </div>
 
-    <div class="chart-section">
+    <div class="loading-section" *ngIf="loading">
+      <p>Cargando atenciones...</p>
+    </div>
+
+    <div class="chart-section" *ngIf="!loading && atencionesPorGrado.length > 0">
       <h3>Gráfica de Atenciones Grupales</h3>
       <div class="chart-container">
         <div class="bar-chart">
           <div class="bar" *ngFor="let grado of atencionesPorGrado; let i = index">
             <div class="bar-label">{{ grado.grado }}</div>
-            <div class="bar-visual" [style.width.%]="(grado.total / maxAtenciones) * 100">
+            <div class="bar-visual" [style.width.%]="maxAtenciones > 0 ? (grado.total / maxAtenciones) * 100 : 0">
               <span class="bar-value">{{ grado.total }}</span>
             </div>
           </div>
@@ -63,7 +120,7 @@
       </div>
     </div>
 
-    <div class="details-section">
+    <div class="details-section" *ngIf="!loading && atencionesPorGrado.length > 0">
       <h3>Detalle por Grado</h3>
       <div class="grade-details">
         <div class="grade-card" *ngFor="let grado of atencionesPorGrado">
@@ -72,8 +129,8 @@
             <span class="toggle-icon">{{ grado.expanded ? '▼' : '▶' }}</span>
           </div>
           <div class="grade-content" *ngIf="grado.expanded">
-            <div class="session-item" *ngFor="let dia of grado.dias">
-              <p>📅 {{ dia }} de {{ selectedMonthLabel }} – Sesión de terapia grupal</p>
+            <div class="session-item" *ngFor="let dia of grado.dias; let i = index">
+              <p>📅 {{ dia }} de {{ selectedMonthLabel }} – {{ getAtencionDetails(grado.grado, dia) }}</p>
             </div>
           </div>
         </div>
