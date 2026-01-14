@@ -283,6 +283,30 @@
     transform: translateY(-20px) rotate(10deg);
   }
 }
+.logos-footer {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.logos-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.logo-image {
+  width: 292px;
+  height: 100px;
+  object-fit: contain;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+}
 
 @media (max-width: 768px) {
   .main-header {
@@ -298,6 +322,16 @@
   .welcome-title {
     font-size: 2rem;
   }
+
+  .logos-container {
+    gap: 20px;
+  }
+
+  .logo-image {
+    width: 120px;
+    height: 80px;
+  }
 }
+
 
 
