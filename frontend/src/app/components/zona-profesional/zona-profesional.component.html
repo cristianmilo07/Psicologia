@@ -34,7 +34,7 @@
     </div>
 
     <div class="zones-section">
-      <div class="zone-card large zone-ninos" routerLink="/historia-clinica">
+      <div class="zone-card large zone-ninos" routerLink="/historia-clinica" *ngIf="user?.role === 'admin'">
         <div class="zone-image-container">
           <img src="assets/images/clinicalHistory.png" alt="Zona Niños" class="zone-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
           <div class="zone-icon fallback" style="display: none;">👦</div>
@@ -44,7 +44,7 @@
         </div>
       </div>
 
-      <div class="zone-card large zone-padres" routerLink="/calendario">
+      <div class="zone-card large zone-padres" routerLink="/calendario" *ngIf="user?.role === 'admin'">
         <div class="zone-image-container">
           <img src="assets/images/groupSessions.png" alt="Zona Padres" class="zone-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
           <div class="zone-icon fallback" style="display: none;">👨‍👩</div>
@@ -64,7 +64,7 @@
         </div>
       </div>
 
-      <div class="zone-card large zone-emocionales" routerLink="/lista-reportes-emocionales">
+      <div class="zone-card large zone-emocionales" routerLink="/lista-reportes-emocionales" *ngIf="user?.role === 'admin'">
         <div class="zone-image-container">
           <img src="assets/images/emotionalReport.png" alt="Reportes Emocionales" class="zone-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
           <div class="zone-icon fallback" style="display: none;">📊</div>

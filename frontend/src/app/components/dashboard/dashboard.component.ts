@@ -13,12 +13,37 @@ import { HeaderComponent } from '../header/header.component';
 })
 export class DashboardComponent {
   user: any = null;
+  title: string = '';
 
   constructor(
     private authService: AuthService,
     private router: Router
   ) {
     this.user = this.authService.getCurrentUser();
+    this.setTitle();
+  }
+
+  private setTitle() {
+    if (this.user) {
+      switch (this.user.role) {
+        case 'child':
+          this.title = `BIENVENIDO, ${this.user.name.toUpperCase()}`;
+          break;
+        case 'parent':
+          this.title = `BIENVENIDO, ${this.user.name.toUpperCase()}`;
+          break;
+        case 'professional':
+          this.title = 'BIENVENIDA, RECTORA';
+          break;
+        case 'admin':
+          this.title = 'BIENVENIDO, PSICÓLOGA CAROLINA';
+          break;
+        default:
+          this.title = 'BIENVENIDO';
+      }
+    } else {
+      this.title = 'BIENVENIDO';
+    }
   }
 
   logout() {

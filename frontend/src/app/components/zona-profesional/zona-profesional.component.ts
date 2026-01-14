@@ -12,10 +12,14 @@ import { HeaderComponent } from '../header/header.component';
   styleUrls: ['./zona-profesional.component.scss']
 })
 export class ZonaProfesionalComponent {
+  user: any = null;
+
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+    this.user = this.authService.getCurrentUser();
+  }
 
   logout() {
     this.authService.logout();

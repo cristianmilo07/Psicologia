@@ -1,5 +1,5 @@
 <div class="dashboard-container">
-  <app-header [title]="'BIENVENIDA, PSICÓLOGA CAROLINA'"></app-header>
+  <app-header [title]="title"></app-header>
 
   <main class="main-content">
     <div class="welcome-section">
@@ -16,7 +16,7 @@
     </div>
 
     <div class="zones-section">
-      <div class="zone-card large zone-ninos" routerLink="/zona-ninos">
+      <div class="zone-card large zone-ninos" routerLink="/zona-ninos" *ngIf="user?.role === 'child' || user?.role === 'parent' || user?.role === 'admin'">
         <div class="zone-image-container">
           <img src="assets/images/childPsychology.png" alt="Zona Niños" class="zone-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
           <div class="zone-icon fallback" style="display: none;">👦</div>
@@ -26,7 +26,7 @@
         </div>
       </div>
 
-      <div class="zone-card large zone-padres" routerLink="/zona-padres">
+      <div class="zone-card large zone-padres" routerLink="/zona-padres" *ngIf="user?.role === 'parent' || user?.role === 'admin'">
         <div class="zone-image-container">
           <img src="assets/images/parentalGuidance.png" alt="Zona Padres" class="zone-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
           <div class="zone-icon fallback" style="display: none;">👨‍👩</div>
@@ -36,7 +36,7 @@
         </div>
       </div>
 
-      <div class="zone-card large zone-profesional" routerLink="/zona-profesional">
+      <div class="zone-card large zone-profesional" routerLink="/zona-profesional" *ngIf="user?.role === 'professional' || user?.role === 'admin'">
         <div class="zone-image-container">
           <img src="assets/images/psychologist.png" alt="Zona Profesional" class="zone-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
           <div class="zone-icon fallback" style="display: none;">👩‍⚕️</div>

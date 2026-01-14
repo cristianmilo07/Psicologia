@@ -16,6 +16,7 @@ export class RegisterComponent {
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
+  role: string = 'child';
   error: string = '';
   loading: boolean = false;
 
@@ -43,7 +44,7 @@ export class RegisterComponent {
     this.loading = true;
     this.error = '';
 
-    this.authService.register(this.email, this.password, this.name).subscribe({
+    this.authService.register(this.email, this.password, this.name, this.role).subscribe({
       next: (response) => {
         this.authService.setAuth(response.token, response.user);
         this.router.navigate(['/dashboard']);
