@@ -1,0 +1,11 @@
+{
+  "name": "kids-psicologo",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "cd frontend && npm install && ng build --prod",
+    "start": "cd backend && npm start"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}

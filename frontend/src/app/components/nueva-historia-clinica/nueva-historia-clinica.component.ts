@@ -16,6 +16,7 @@ export class NuevaHistoriaClinicaComponent {
   user: any = null;
   historiaClinicaForm: FormGroup;
   showModal: boolean = false;
+  showSuccessModal: boolean = false;
   selectedFiles: File[] = [];
   recognition: any;
   isListening: boolean = false;
@@ -172,7 +173,7 @@ export class NuevaHistoriaClinicaComponent {
       this.http.post('http://localhost:3000/api/historias', formData, { headers })
         .subscribe({
           next: (response: any) => {
-            alert('Historia clínica creada exitosamente');
+            this.showSuccessModal = true;
             // Reset form but keep the structure intact
             this.historiaClinicaForm.reset();
             // Clear sesiones array
@@ -195,5 +196,10 @@ export class NuevaHistoriaClinicaComponent {
     } else {
       alert('Por favor, complete todos los campos requeridos');
     }
+  }
+
+  aceptarSuccess() {
+    this.showSuccessModal = false;
+    this.router.navigate(['/historia-clinica']);
   }
 }

@@ -113,3 +113,8 @@ El diseño está inspirado en un ambiente amigable y colorido para niños, con:
 - Reportes y gráficos avanzados
 - Notificaciones en tiempo real
 
+wfg9sMtD6w8F_Tr
+
+
+
+mongodb://cristianmilo1989_db_user:cristian12345@kidspsicologo-cluster-shard-00-00.35wdqre.mongodb.net:27017,kidspsicologo-cluster-shard-00-01.35wdqre.mongodb.net:27017,kidspsicologo-cluster-shard-00-02.35wdqre.mongodb.net:27017/kidspsicologo?ssl=true&replicaSet=atlas-13v8p1-shard-0&authSource=admin&retryWrites=true&w=majority

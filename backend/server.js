@@ -7,6 +7,7 @@ const userRoutes = require('./routes/users');
 const historiasRoutes = require('./routes/historias');
 const reportesEmocionalesRoutes = require('./routes/reportes-emocionales');
 const atencionesGrupalesRoutes = require('./routes/atenciones-grupales');
+const citasRoutes = require('./routes/citas');
 const bcrypt = require('bcryptjs');
 const User = require('./models/User');
 
@@ -52,12 +53,19 @@ app.use('/api/users', userRoutes);
 app.use('/api/historias', historiasRoutes);
 app.use('/api/reportes-emocionales', reportesEmocionalesRoutes);
 app.use('/api/atenciones-grupales', atencionesGrupalesRoutes);
+app.use('/api/citas', citasRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// For Vercel deployment
+module.exports = app;
+
+// Local development
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}

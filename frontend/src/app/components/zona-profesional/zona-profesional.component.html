@@ -33,6 +33,16 @@
       <p class="welcome-subtitle">Gestiona tus pacientes y sesiones de manera eficiente</p>
     </div>
 
+    <div class="notifications-section" *ngIf="notifications.length > 0">
+      <h3>Notificaciones</h3>
+      <ul class="notifications-list">
+        <li *ngFor="let notification of notifications" class="notification-item">
+          {{ notification }}
+        </li>
+      </ul>
+      <button class="btn-clear" (click)="clearNotifications()">Limpiar Notificaciones</button>
+    </div>
+
     <div class="zones-section">
       <div class="zone-card large zone-ninos" routerLink="/historia-clinica" *ngIf="user?.role === 'admin'">
         <div class="zone-image-container">
