@@ -21,6 +21,7 @@ export class EditarHistoriaClinicaComponent implements OnInit {
   originalHistoriaData: any = null;
   selectedFiles: File[] = [];
   existingFiles: any[] = [];
+  acompanamiento: string = '';
 
   constructor(
     private authService: AuthService,
@@ -37,6 +38,8 @@ export class EditarHistoriaClinicaComponent implements OnInit {
       direccion: [''],
       telefono: [''],
       email: ['', [Validators.email]],
+      acompanamiento: ['', Validators.required],
+      descripcionAcompanamientoPadre: [''],
       motivoConsulta: ['', Validators.required],
       antecedentesMedicos: [''],
       sintomasActuales: ['', Validators.required],
@@ -105,6 +108,8 @@ export class EditarHistoriaClinicaComponent implements OnInit {
     const fechaNacimiento = historia.fechaNacimiento ?
       new Date(historia.fechaNacimiento).toISOString().split('T')[0] : '';
 
+    this.acompanamiento = historia.acompanamiento || '';
+
     this.historiaClinicaForm.patchValue({
       nombrePaciente: historia.nombrePaciente || '',
       fechaNacimiento: fechaNacimiento,
@@ -112,6 +117,8 @@ export class EditarHistoriaClinicaComponent implements OnInit {
       direccion: historia.direccion || '',
       telefono: historia.telefono || '',
       email: historia.email || '',
+      acompanamiento: historia.acompanamiento || '',
+      descripcionAcompanamientoPadre: historia.descripcionAcompanamientoPadre || '',
       motivoConsulta: historia.motivoConsulta || '',
       antecedentesMedicos: historia.antecedentesMedicos || '',
       sintomasActuales: historia.sintomasActuales || '',
@@ -159,6 +166,10 @@ export class EditarHistoriaClinicaComponent implements OnInit {
     return this.historiaClinicaForm.get('sesiones') as FormArray;
   }
 
+  get isAcompanamientoSelected(): boolean {
+    return !!this.historiaClinicaForm.get('acompanamiento')?.value;
+  }
+
   agregarSesion() {
     this.sesiones.push(this.fb.group({
       fecha: ['', Validators.required],
@@ -200,7 +211,7 @@ export class EditarHistoriaClinicaComponent implements OnInit {
     // Compare key fields
     const fieldsToCompare = [
       'nombrePaciente', 'fechaNacimiento', 'genero', 'direccion', 'telefono', 'email',
-      'motivoConsulta', 'antecedentesMedicos', 'sintomasActuales', 'diagnostico',
+      'acompanamiento', 'descripcionAcompanamientoPadre', 'motivoConsulta', 'antecedentesMedicos', 'sintomasActuales', 'diagnostico',
       'planTratamiento', 'notas', 'nombrePadre', 'nombreMadre', 'nombreAcudiente',
       'tieneHermanosColegio', 'gradoHermano', 'parentescoAcudiente'
     ];
