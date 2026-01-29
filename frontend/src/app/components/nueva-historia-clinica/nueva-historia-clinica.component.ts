@@ -54,27 +54,30 @@ export class NuevaHistoriaClinicaComponent {
       console.warn('Speech recognition not supported in this browser');
     }
     this.historiaClinicaForm = this.fb.group({
-      nombrePaciente: ['', Validators.required],
-      fechaNacimiento: ['', Validators.required],
-      genero: ['', Validators.required],
+      nombrePaciente: [''],
+      fechaNacimiento: [''],
+      genero: [''],
       direccion: [''],
       telefono: [''],
       email: ['', [Validators.email]],
-      motivoConsulta: ['', Validators.required],
+      acompanamiento: [''],
+      descripcionAcompanamientoPadre: [''],
+      motivoConsulta: [''],
       antecedentesMedicos: [''],
-      sintomasActuales: ['', Validators.required],
+      sintomasActuales: [''],
       diagnostico: [''],
       planTratamiento: [''],
       notas: [''],
       // Información familiar
-      nombrePadre: ['', Validators.required],
-      nombreMadre: ['', Validators.required],
-      nombreAcudiente: ['', Validators.required],
+      nombrePadre: [''],
+      nombreMadre: [''],
+      nombreAcudiente: [''],
       tieneHermanosColegio: [''], // No requerido
       gradoHermano: [''], // No requerido
-      parentescoAcudiente: ['', Validators.required],
+      parentescoAcudiente: [''],
       sesiones: this.fb.array([])
     });
+
   }
 
   logout() {
@@ -90,11 +93,15 @@ export class NuevaHistoriaClinicaComponent {
     return this.historiaClinicaForm.get('sesiones') as FormArray;
   }
 
+  get isAcompanamientoSelected(): boolean {
+    return !!this.historiaClinicaForm.get('acompanamiento')?.value;
+  }
+
   agregarSesion() {
     this.sesiones.push(this.fb.group({
-      fecha: ['', Validators.required],
-      tipo: ['', Validators.required],
-      notas: ['', Validators.required],
+      fecha: [''],
+      tipo: [''],
+      notas: [''],
       objetivos: [''],
       progreso: ['']
     }));
@@ -142,60 +149,56 @@ export class NuevaHistoriaClinicaComponent {
   }
 
   onSubmit() {
-    if (this.historiaClinicaForm.valid) {
-      const token = this.authService.getToken();
-      if (!token) {
-        alert('No estás autenticado');
-        return;
+    const token = this.authService.getToken();
+    if (!token) {
+      alert('No estás autenticado');
+      return;
+    }
+
+    const formData = new FormData();
+    const formValue = this.historiaClinicaForm.value;
+
+    // Append form fields
+    Object.keys(formValue).forEach(key => {
+      if (key === 'sesiones') {
+        formData.append(key, JSON.stringify(formValue[key]));
+      } else {
+        formData.append(key, formValue[key]);
       }
+    });
 
-      const formData = new FormData();
-      const formValue = this.historiaClinicaForm.value;
+    // Append files
+    this.selectedFiles.forEach((file, index) => {
+      formData.append('archivos', file);
+    });
 
-      // Append form fields
-      Object.keys(formValue).forEach(key => {
-        if (key === 'sesiones') {
-          formData.append(key, JSON.stringify(formValue[key]));
-        } else {
-          formData.append(key, formValue[key]);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    this.http.post('http://localhost:3000/api/historias', formData, { headers })
+      .subscribe({
+        next: (response: any) => {
+          this.showSuccessModal = true;
+          // Reset form but keep the structure intact
+          this.historiaClinicaForm.reset();
+          // Clear sesiones array
+          const sesionesArray = this.historiaClinicaForm.get('sesiones') as FormArray;
+          while (sesionesArray.length > 0) {
+            sesionesArray.removeAt(0);
+          }
+          // Clear selected files
+          this.selectedFiles = [];
+        },
+        error: (error) => {
+          console.error('Error al crear historia clínica:', error);
+          if (error.status === 401) {
+            this.showModal = true;
+          } else {
+            alert('Error al crear la historia clínica: ' + (error.error?.message || 'Error desconocido'));
+          }
         }
       });
-
-      // Append files
-      this.selectedFiles.forEach((file, index) => {
-        formData.append('archivos', file);
-      });
-
-      const headers = new HttpHeaders({
-        'Authorization': `Bearer ${token}`
-      });
-
-      this.http.post('http://localhost:3000/api/historias', formData, { headers })
-        .subscribe({
-          next: (response: any) => {
-            this.showSuccessModal = true;
-            // Reset form but keep the structure intact
-            this.historiaClinicaForm.reset();
-            // Clear sesiones array
-            const sesionesArray = this.historiaClinicaForm.get('sesiones') as FormArray;
-            while (sesionesArray.length > 0) {
-              sesionesArray.removeAt(0);
-            }
-            // Clear selected files
-            this.selectedFiles = [];
-          },
-          error: (error) => {
-            console.error('Error al crear historia clínica:', error);
-            if (error.status === 401) {
-              this.showModal = true;
-            } else {
-              alert('Error al crear la historia clínica: ' + (error.error?.message || 'Error desconocido'));
-            }
-          }
-        });
-    } else {
-      alert('Por favor, complete todos los campos requeridos');
-    }
   }
 
   aceptarSuccess() {
@@ -203,3 +206,4 @@ export class NuevaHistoriaClinicaComponent {
     this.router.navigate(['/historia-clinica']);
   }
 }
+
