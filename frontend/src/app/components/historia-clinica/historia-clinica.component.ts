@@ -38,7 +38,13 @@ export class HistoriaClinicaComponent implements OnInit {
           this.historiasClinicas = response.map((historia: any) => {
             const sesiones = historia.sesiones || [];
             const numSesiones = sesiones.length;
-            let resumenExtendido = historia.motivoConsulta || 'Sin resumen';
+            let resumenExtendido = '';
+
+            if (historia.acompanamiento === 'acompanamiento_padre') {
+              resumenExtendido = historia.descripcionAcompanamientoPadre || 'Sin descripción';
+            } else {
+              resumenExtendido = historia.motivoConsulta || 'Sin resumen';
+            }
 
             if (numSesiones > 0) {
               const ultimaSesion = sesiones[sesiones.length - 1];
