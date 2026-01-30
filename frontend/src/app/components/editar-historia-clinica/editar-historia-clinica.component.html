@@ -73,6 +73,16 @@
           </div>
         </div>
 
+        <div class="form-row">
+          <div class="form-group">
+            <label for="acompanamiento">Tipo de Acompañamiento *</label>
+            <select id="acompanamiento" formControlName="acompanamiento" class="form-control">
+              <option value="">Seleccione una opción</option>
+              <option value="acompanamiento_padre">Acompañamiento familiar</option>
+              <option value="acompanante_estudiante">Acompañante a estudiante</option>
+            </select>
+          </div>
+        </div>
 
         <div class="form-section" *ngIf="historiaClinicaForm.get('acompanamiento')?.value === 'acompanamiento_padre'">
           <h2>Descripción del Acompañamiento Familiar</h2>
@@ -127,7 +137,7 @@
           </div>
         </div>
 
-        <div class="form-section" >
+        <div class="form-section" *ngIf="historiaClinicaForm.get('acompanamiento')?.value === 'acompanante_estudiante'">
           <h2>Información Médica</h2>
           <div class="form-group">
             <label for="motivoConsulta">Motivo de Consulta *</label>
@@ -143,7 +153,7 @@
           </div>
         </div>
 
-        <div class="form-section" >
+        <div class="form-section" *ngIf="historiaClinicaForm.get('acompanamiento')?.value === 'acompanante_estudiante'">
           <h2>Diagnóstico y Tratamiento</h2>
           <div class="form-group">
             <label for="diagnostico">Diagnóstico</label>
@@ -159,7 +169,7 @@
           </div>
         </div>
 
-        <div class="form-section" >
+        <div class="form-section" *ngIf="historiaClinicaForm.get('acompanamiento')?.value === 'acompanante_estudiante'">
           <h2>PIAR</h2>
           <div class="form-group">
             <label for="archivos">Archivos (Imágenes o PDFs)</label>
@@ -185,7 +195,7 @@
           </div>
         </div>
 
-        <div class="form-section" >
+        <div class="form-section" *ngIf="historiaClinicaForm.get('acompanamiento')?.value === 'acompanante_estudiante'">
           <h2>Sesiones de Terapia</h2>
           <button type="button" class="btn-add" (click)="agregarSesion()">Agregar Sesión</button>
           <div class="sesiones-list" formArrayName="sesiones">

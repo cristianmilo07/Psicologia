@@ -46,15 +46,63 @@ export class EditarHistoriaClinicaComponent implements OnInit {
       diagnostico: [''],
       planTratamiento: [''],
       notas: [''],
-      // Información familiar
-      nombrePadre: ['', Validators.required],
-      nombreMadre: ['', Validators.required],
-      nombreAcudiente: ['', Validators.required],
-      tieneHermanosColegio: [''], // No requerido
-      gradoHermano: [''], // No requerido
-      parentescoAcudiente: ['', Validators.required],
+      // Información familiar - validación dinámica según acompanamiento
+      nombrePadre: [''],
+      nombreMadre: [''],
+      nombreAcudiente: [''],
+      tieneHermanosColegio: [''],
+      gradoHermano: [''],
+      parentescoAcudiente: [''],
       sesiones: this.fb.array([])
     });
+
+    // Escuchar cambios en acompanamiento para validar dinámicamente
+    this.historiaClinicaForm.get('acompanamiento')?.valueChanges.subscribe(tipo => {
+      this.updateValidators(tipo);
+    });
+  }
+
+  updateValidators(tipo: string) {
+    const nombrePadre = this.historiaClinicaForm.get('nombrePadre');
+    const nombreMadre = this.historiaClinicaForm.get('nombreMadre');
+    const nombreAcudiente = this.historiaClinicaForm.get('nombreAcudiente');
+    const parentescoAcudiente = this.historiaClinicaForm.get('parentescoAcudiente');
+    const motivoConsulta = this.historiaClinicaForm.get('motivoConsulta');
+    const sintomasActuales = this.historiaClinicaForm.get('sintomasActuales');
+
+    if (tipo === 'acompanante_estudiante') {
+      // Campos requeridos para acompanante_estudiante
+      nombrePadre?.setValidators([Validators.required]);
+      nombreMadre?.setValidators([Validators.required]);
+      nombreAcudiente?.setValidators([Validators.required]);
+      parentescoAcudiente?.setValidators([Validators.required]);
+      motivoConsulta?.setValidators([Validators.required]);
+      sintomasActuales?.setValidators([Validators.required]);
+    } else if (tipo === 'acompanamiento_padre') {
+      // Solo acompanamiento es requerido
+      nombrePadre?.setValidators([]);
+      nombreMadre?.setValidators([]);
+      nombreAcudiente?.setValidators([]);
+      parentescoAcudiente?.setValidators([]);
+      motivoConsulta?.setValidators([]);
+      sintomasActuales?.setValidators([]);
+    } else {
+      // Limpiar todos los validators opcionales
+      nombrePadre?.setValidators([]);
+      nombreMadre?.setValidators([]);
+      nombreAcudiente?.setValidators([]);
+      parentescoAcudiente?.setValidators([]);
+      motivoConsulta?.setValidators([]);
+      sintomasActuales?.setValidators([]);
+    }
+
+    // Actualizar el estado de los controles
+    nombrePadre?.updateValueAndValidity();
+    nombreMadre?.updateValueAndValidity();
+    nombreAcudiente?.updateValueAndValidity();
+    parentescoAcudiente?.updateValueAndValidity();
+    motivoConsulta?.updateValueAndValidity();
+    sintomasActuales?.updateValueAndValidity();
   }
 
   ngOnInit() {
@@ -156,6 +204,9 @@ export class EditarHistoriaClinicaComponent implements OnInit {
 
     // Set existing files
     this.existingFiles = historia.archivos || [];
+
+    // Apply validators based on acompañamiento type
+    this.updateValidators(historia.acompanamiento || '');
   }
 
   logout() {
@@ -255,7 +306,16 @@ export class EditarHistoriaClinicaComponent implements OnInit {
       // Show confirmation modal
       this.showConfirmModal = true;
     } else {
-      alert('Por favor, complete todos los campos requeridos');
+      // Mostrar campos inválidos para depuración
+      const invalidFields: string[] = [];
+      Object.keys(this.historiaClinicaForm.controls).forEach(key => {
+        const control = this.historiaClinicaForm.get(key);
+        if (control?.invalid) {
+          invalidFields.push(key);
+        }
+      });
+      console.log('Campos inválidos:', invalidFields);
+      alert('Por favor, complete todos los campos requeridos. Campos faltantes: ' + invalidFields.join(', '));
     }
   }
 
