@@ -20,6 +20,7 @@ export class NuevaHistoriaClinicaComponent {
   selectedFiles: File[] = [];
   recognition: any;
   isListening: boolean = false;
+  mostrarCitacionPadres: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -62,6 +63,7 @@ export class NuevaHistoriaClinicaComponent {
       email: ['', [Validators.email]],
       acompanamiento: [''],
       descripcionAcompanamientoPadre: [''],
+      descripcionAcompanamientoFamiliar: [''],
       motivoConsulta: [''],
       antecedentesMedicos: [''],
       sintomasActuales: [''],
@@ -95,6 +97,10 @@ export class NuevaHistoriaClinicaComponent {
 
   get isAcompanamientoSelected(): boolean {
     return !!this.historiaClinicaForm.get('acompanamiento')?.value;
+  }
+
+  toggleCitacionPadres() {
+    this.mostrarCitacionPadres = !this.mostrarCitacionPadres;
   }
 
   agregarSesion() {

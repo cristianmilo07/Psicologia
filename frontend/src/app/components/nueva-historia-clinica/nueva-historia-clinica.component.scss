@@ -361,6 +361,54 @@
   }
 }
 
+// Estilos para Citación a padres
+.citacion-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #ECF0F1;
+
+  .btn-citacion {
+    background: var(--primary-purple);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 20px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(142, 68, 173, 0.4);
+    }
+  }
+
+  .citacion-container {
+    margin-top: 20px;
+    animation: slideDown 0.3s ease;
+
+    textarea {
+      min-height: 100px;
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .sesiones-list {
   display: flex;
   flex-direction: column;

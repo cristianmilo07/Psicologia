@@ -58,6 +58,9 @@ const historiaClinicaSchema = new mongoose.Schema({
   descripcionAcompanamientoPadre: {
     type: String
   },
+  descripcionAcompanamientoFamiliar: {
+    type: String
+  },
   motivoConsulta: {
     type: String
   },
