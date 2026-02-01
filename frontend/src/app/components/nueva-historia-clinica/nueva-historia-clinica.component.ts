@@ -184,7 +184,7 @@ export class NuevaHistoriaClinicaComponent {
 
     // Append form fields
     Object.keys(formValue).forEach(key => {
-      if (key === 'sesiones') {
+      if (key === 'sesiones' || key === 'sesionesAcompanamientoFamiliar') {
         formData.append(key, JSON.stringify(formValue[key]));
       } else {
         formData.append(key, formValue[key]);

@@ -22,6 +22,7 @@ export class EditarHistoriaClinicaComponent implements OnInit {
   selectedFiles: File[] = [];
   existingFiles: any[] = [];
   acompanamiento: string = '';
+  mostrarCitacionPadres: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -53,7 +54,8 @@ export class EditarHistoriaClinicaComponent implements OnInit {
       tieneHermanosColegio: [''],
       gradoHermano: [''],
       parentescoAcudiente: [''],
-      sesiones: this.fb.array([])
+      sesiones: this.fb.array([]),
+      sesionesAcompanamientoFamiliar: this.fb.array([])
     });
 
     // Escuchar cambios en acompanamiento para validar dinámicamente
@@ -193,6 +195,7 @@ export class EditarHistoriaClinicaComponent implements OnInit {
           new Date(sesion.fecha).toISOString().split('T')[0] : '';
 
         sesionesArray.push(this.fb.group({
+          _id: [sesion._id || null],
           fecha: [fechaSesion, Validators.required],
           tipo: [sesion.tipo || '', Validators.required],
           notas: [sesion.notas || '', Validators.required],
@@ -200,6 +203,26 @@ export class EditarHistoriaClinicaComponent implements OnInit {
           progreso: [sesion.progreso || '']
         }));
       });
+    }
+
+    // Load sesionesAcompanamientoFamiliar
+    const sesionesAcompFamiliarArray = this.historiaClinicaForm.get('sesionesAcompanamientoFamiliar') as FormArray;
+    sesionesAcompFamiliarArray.clear();
+
+    if (historia.sesionesAcompanamientoFamiliar && historia.sesionesAcompanamientoFamiliar.length > 0) {
+      historia.sesionesAcompanamientoFamiliar.forEach((sesion: any) => {
+        sesionesAcompFamiliarArray.push(this.fb.group({
+          _id: [sesion._id || null],
+          descripcion: [sesion.descripcion || '']
+        }));
+      });
+      this.mostrarCitacionPadres = true;
+    } else {
+      // Add initial empty session
+      sesionesAcompFamiliarArray.push(this.fb.group({
+        _id: [null],
+        descripcion: ['']
+      }));
     }
 
     // Set existing files
@@ -215,6 +238,24 @@ export class EditarHistoriaClinicaComponent implements OnInit {
 
   get sesiones(): FormArray {
     return this.historiaClinicaForm.get('sesiones') as FormArray;
+  }
+
+  get sesionesAcompanamientoFamiliar(): FormArray {
+    return this.historiaClinicaForm.get('sesionesAcompanamientoFamiliar') as FormArray;
+  }
+
+  toggleCitacionPadres() {
+    this.mostrarCitacionPadres = !this.mostrarCitacionPadres;
+  }
+
+  agregarSesionAcompanamientoFamiliar() {
+    this.sesionesAcompanamientoFamiliar.push(this.fb.group({
+      descripcion: ['']
+    }));
+  }
+
+  eliminarSesionAcompanamientoFamiliar(index: number) {
+    this.sesionesAcompanamientoFamiliar.removeAt(index);
   }
 
   get isAcompanamientoSelected(): boolean {
@@ -292,6 +333,20 @@ export class EditarHistoriaClinicaComponent implements OnInit {
       }
     }
 
+    // Compare sesionesAcompanamientoFamiliar array
+    if (currentData.sesionesAcompanamientoFamiliar.length !== this.originalHistoriaData.sesionesAcompanamientoFamiliar?.length) {
+      return true;
+    }
+
+    for (let i = 0; i < currentData.sesionesAcompanamientoFamiliar.length; i++) {
+      const currentSesion = currentData.sesionesAcompanamientoFamiliar[i];
+      const originalSesion = this.originalHistoriaData.sesionesAcompanamientoFamiliar?.[i];
+
+      if (!originalSesion || currentSesion.descripcion !== originalSesion.descripcion) {
+        return true;
+      }
+    }
+
     return false;
   }
 
@@ -333,7 +388,7 @@ export class EditarHistoriaClinicaComponent implements OnInit {
 
     // Append form fields
     Object.keys(formValue).forEach(key => {
-      if (key === 'sesiones') {
+      if (key === 'sesiones' || key === 'sesionesAcompanamientoFamiliar') {
         formData.append(key, JSON.stringify(formValue[key]));
       } else {
         formData.append(key, formValue[key]);
