@@ -61,6 +61,15 @@ const historiaClinicaSchema = new mongoose.Schema({
   descripcionAcompanamientoFamiliar: {
     type: String
   },
+  sesionesAcompanamientoFamiliar: [{
+    descripcion: {
+      type: String
+    },
+    fecha: {
+      type: Date,
+      default: Date.now
+    }
+  }],
   motivoConsulta: {
     type: String
   },

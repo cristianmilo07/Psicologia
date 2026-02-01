@@ -63,7 +63,7 @@ export class NuevaHistoriaClinicaComponent {
       email: ['', [Validators.email]],
       acompanamiento: [''],
       descripcionAcompanamientoPadre: [''],
-      descripcionAcompanamientoFamiliar: [''],
+      sesionesAcompanamientoFamiliar: this.fb.array([this.crearSesionAcompanamientoFamiliar()]),
       motivoConsulta: [''],
       antecedentesMedicos: [''],
       sintomasActuales: [''],
@@ -93,6 +93,24 @@ export class NuevaHistoriaClinicaComponent {
 
   get sesiones(): FormArray {
     return this.historiaClinicaForm.get('sesiones') as FormArray;
+  }
+
+  get sesionesAcompanamientoFamiliar(): FormArray {
+    return this.historiaClinicaForm.get('sesionesAcompanamientoFamiliar') as FormArray;
+  }
+
+  crearSesionAcompanamientoFamiliar() {
+    return this.fb.group({
+      descripcion: ['']
+    });
+  }
+
+  agregarSesionAcompanamientoFamiliar() {
+    this.sesionesAcompanamientoFamiliar.push(this.crearSesionAcompanamientoFamiliar());
+  }
+
+  eliminarSesionAcompanamientoFamiliar(index: number) {
+    this.sesionesAcompanamientoFamiliar.removeAt(index);
   }
 
   get isAcompanamientoSelected(): boolean {
@@ -193,6 +211,13 @@ export class NuevaHistoriaClinicaComponent {
           while (sesionesArray.length > 0) {
             sesionesArray.removeAt(0);
           }
+          // Clear sesionesAcompanamientoFamiliar array
+          const sesionesAcompFamiliarArray = this.historiaClinicaForm.get('sesionesAcompanamientoFamiliar') as FormArray;
+          while (sesionesAcompFamiliarArray.length > 0) {
+            sesionesAcompFamiliarArray.removeAt(0);
+          }
+          // Add initial session for acompanamiento familiar
+          sesionesAcompFamiliarArray.push(this.crearSesionAcompanamientoFamiliar());
           // Clear selected files
           this.selectedFiles = [];
         },
