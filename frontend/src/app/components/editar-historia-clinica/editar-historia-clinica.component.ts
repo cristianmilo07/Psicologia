@@ -36,6 +36,7 @@ export class EditarHistoriaClinicaComponent implements OnInit {
       nombrePaciente: ['', Validators.required],
       fechaNacimiento: ['', Validators.required],
       genero: ['', Validators.required],
+      gradoPaciente: [''],
       direccion: [''],
       telefono: [''],
       email: ['', [Validators.email]],
@@ -164,6 +165,7 @@ export class EditarHistoriaClinicaComponent implements OnInit {
       nombrePaciente: historia.nombrePaciente || '',
       fechaNacimiento: fechaNacimiento,
       genero: historia.genero || '',
+      gradoPaciente: historia.gradoPaciente || historia.grado || '',
       direccion: historia.direccion || '',
       telefono: historia.telefono || '',
       email: historia.email || '',
@@ -302,7 +304,7 @@ export class EditarHistoriaClinicaComponent implements OnInit {
 
     // Compare key fields
     const fieldsToCompare = [
-      'nombrePaciente', 'fechaNacimiento', 'genero', 'direccion', 'telefono', 'email',
+      'nombrePaciente', 'fechaNacimiento', 'genero', 'gradoPaciente', 'direccion', 'telefono', 'email',
       'acompanamiento', 'descripcionAcompanamientoPadre', 'motivoConsulta', 'antecedentesMedicos', 'sintomasActuales', 'diagnostico',
       'planTratamiento', 'notas', 'nombrePadre', 'nombreMadre', 'nombreAcudiente',
       'tieneHermanosColegio', 'gradoHermano', 'parentescoAcudiente'

@@ -34,7 +34,7 @@ const historiaClinicaSchema = new mongoose.Schema({
     type: String,
     enum: ['masculino', 'femenino', 'otro']
   },
-  grado: {
+  gradoPaciente: {
     type: String,
     trim: true
   },

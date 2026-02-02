@@ -58,6 +58,7 @@ export class NuevaHistoriaClinicaComponent {
       nombrePaciente: [''],
       fechaNacimiento: [''],
       genero: [''],
+      gradoPaciente: [''],
       direccion: [''],
       telefono: [''],
       email: ['', [Validators.email]],
