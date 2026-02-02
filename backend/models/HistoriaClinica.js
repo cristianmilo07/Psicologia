@@ -38,6 +38,11 @@ const historiaClinicaSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
+  nivelRiesgo: {
+    type: String,
+    enum: ['', 'critico', 'alto', 'medio', 'bajo'],
+    default: ''
+  },
   direccion: {
     type: String,
     trim: true

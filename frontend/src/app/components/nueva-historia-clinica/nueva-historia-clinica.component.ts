@@ -62,6 +62,7 @@ export class NuevaHistoriaClinicaComponent {
       direccion: [''],
       telefono: [''],
       email: ['', [Validators.email]],
+      nivelRiesgo: [''],
       acompanamiento: [''],
       descripcionAcompanamientoPadre: [''],
       sesionesAcompanamientoFamiliar: this.fb.array([this.crearSesionAcompanamientoFamiliar()]),
