@@ -1,134 +1,140 @@
-<div class="container">
-  <h1>¡Hola Estudiante! 🌟</h1>
-  <p>Responde estas preguntas de forma anónima. ¡Toma tu tiempo!</p>
+<div class="main-container">
+  <div class="content-wrapper">
+    <!-- Encabezado -->
+    <header class="header">
+      <img 
+        src="assets/images/sol_titulo.png" 
+        alt="Sol" 
+        class="sun-title"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+      <span class="sun-emoji" style="display: none;">☀️</span>
+      <h1 class="title">¡Hola Estudiante!</h1>
+    </header>
 
-  <!-- Page 1: Clima Emocional -->
-  <div *ngIf="currentPage === 1" class="page">
-    <h2>Nivel 1: Clima Emocional</h2>
-    <div class="question">
-      <label>Si hoy fueras un clima, ¿cómo estarías?</label>
-      <div class="options">
-        <button (click)="selectOption('clima', 'soleado')" [class.selected]="formData.clima === 'soleado'">☀️ Soleado y feliz</button>
-        <button (click)="selectOption('clima', 'nublado')" [class.selected]="formData.clima === 'nublado'">☁️ Nublado y pensativo</button>
-        <button (click)="selectOption('clima', 'tormentoso')" [class.selected]="formData.clima === 'tormentoso'">⛈️ Tormentoso/Enojado</button>
-        <button (click)="selectOption('clima', 'lluvioso')" [class.selected]="formData.clima === 'lluvioso'">🌧️ Lluvioso/Triste</button>
+    <!-- Subtítulo -->
+    <div class="subtitle-container">
+      <span class="subtitle">Nivel 1:</span>
+      <span class="level-title">Clima Emocional</span>
+    </div>
+
+    <!-- Grid 2x2 de botones de clima -->
+    <div class="weather-grid">
+      <button 
+        class="weather-btn sunny" 
+        (click)="selectClima('soleado')"
+        [class.selected]="selectedClima === 'soleado'">
+        <img 
+          src="assets/images/Soleado.jpg" 
+          alt="Soleado" 
+          class="btn-image"
+          onerror="this.style.display='none'; this.parentElement.querySelector('.btn-fallback').style.display='flex';">
+        <span class="btn-fallback" style="display: none;">☀️</span>
+        <span class="btn-text">Soleado y feliz</span>
+      </button>
+
+      <button 
+        class="weather-btn cloudy" 
+        (click)="selectClima('nublado')"
+        [class.selected]="selectedClima === 'nublado'">
+        <img 
+          src="assets/images/boton_nublado.png" 
+          alt="Nublado" 
+          class="btn-image"
+          onerror="this.style.display='none'; this.parentElement.querySelector('.btn-fallback').style.display='flex';">
+        <span class="btn-fallback" style="display: none;">☁️</span>
+        <span class="btn-text">Nublado y pensativo</span>
+      </button>
+
+      <button 
+        class="weather-btn stormy" 
+        (click)="selectClima('tormentoso')"
+        [class.selected]="selectedClima === 'tormentoso'">
+        <img 
+          src="assets/images/boton_tormentoso.png" 
+          alt="Tormentoso" 
+          class="btn-image"
+          onerror="this.style.display='none'; this.parentElement.querySelector('.btn-fallback').style.display='flex';">
+        <span class="btn-fallback" style="display: none;">⛈️</span>
+        <span class="btn-text">Tormentoso/Enojado</span>
+      </button>
+
+      <button 
+        class="weather-btn rainy" 
+        (click)="selectClima('lluvioso')"
+        [class.selected]="selectedClima === 'lluvioso'">
+        <img 
+          src="assets/images/boton_lluvioso.png" 
+          alt="Lluvioso" 
+          class="btn-image"
+          onerror="this.style.display='none'; this.parentElement.querySelector('.btn-fallback').style.display='flex';">
+        <span class="btn-fallback" style="display: none;">🌧️</span>
+        <span class="btn-text">Lluvioso/Triste</span>
+      </button>
+    </div>
+
+    <!-- Fila horizontal de emojis -->
+    <div class="emoji-section">
+      <p class="emoji-instruction">Usa un emoji para describir tu semana</p>
+      <div class="emoji-row">
+        <button 
+          class="emoji-circle" 
+          (click)="selectEmoji('flor')"
+          [class.selected]="selectedEmoji === 'flor'">
+          <img 
+            src="assets/images/1.jpg" 
+            alt="Flor" 
+            class="emoji-img"
+            onerror="this.style.display='none'; this.parentElement.textContent='🌸';">
+        </button>
+        <button 
+          class="emoji-circle" 
+          (click)="selectEmoji('cool')"
+          [class.selected]="selectedEmoji === 'cool'">
+          <img 
+            src="assets/images/2.jpg" 
+            alt="Cool" 
+            class="emoji-img"
+            onerror="this.style.display='none'; this.parentElement.textContent='😎';">
+        </button>
+        <button 
+          class="emoji-circle" 
+          (click)="selectEmoji('pensando')"
+          [class.selected]="selectedEmoji === 'pensando'">
+          <img 
+            src="assets/images/3.jpg" 
+            alt="Pensando" 
+            class="emoji-img"
+            onerror="this.style.display='none'; this.parentElement.textContent='🤔';">
+        </button>
+        <button 
+          class="emoji-circle" 
+          (click)="selectEmoji('arcoiris')"
+          [class.selected]="selectedEmoji === 'arcoiris'">
+          <img 
+            src="assets/images/4.jpg" 
+            alt="Arcoíris" 
+            class="emoji-img"
+            onerror="this.style.display='none'; this.parentElement.textContent='🌈';">
+        </button>
+        <button 
+          class="emoji-circle" 
+          (click)="selectEmoji('cohete')"
+          [class.selected]="selectedEmoji === 'cohete'">
+          <img 
+            src="assets/images/5.jpg" 
+            alt="Cohete" 
+            class="emoji-img"
+            onerror="this.style.display='none'; this.parentElement.textContent='🚀';">
+        </button>
       </div>
     </div>
-    <div class="question">
-      <label>Usa un emoji para describir tu semana:</label>
-      <div class="options">
-        <button (click)="selectOption('emoji', 'rocket')" [class.selected]="formData.emoji === 'rocket'">🚀</button>
-        <button (click)="selectOption('emoji', 'dizzy')" [class.selected]="formData.emoji === 'dizzy'">😵‍💫</button>
-        <button (click)="selectOption('emoji', 'sleepy')" [class.selected]="formData.emoji === 'sleepy'">😴</button>
-        <button (click)="selectOption('emoji', 'rainbow')" [class.selected]="formData.emoji === 'rainbow'">🌈</button>
-        <button (click)="selectOption('emoji', 'brick')" [class.selected]="formData.emoji === 'brick'">🧱</button>
-      </div>
-    </div>
-    <img src="https://media.giphy.com/media/3o7TKz9bX9Z9Z9Z9Z9/giphy.gif" alt="Fun GIF" class="gif">
-    <button class="next-btn" (click)="nextPage()">¡Siguiente Nivel! 🚀</button>
-  </div>
 
-  <!-- Page 2: Vida Escolar -->
-  <div *ngIf="currentPage === 2" class="page">
-    <h2>Nivel 2: Vida Escolar</h2>
-    <div class="question">
-      <label>¿Qué tanto "lag" (retraso/pereza) sientes cuando entras al salón?</label>
-      <input type="range" min="1" max="5" [(ngModel)]="formData.lag" class="slider">
-      <span>{{ formData.lag }}/5</span>
-    </div>
-    <div class="question">
-      <label>¿Sientes que tus profes o compañeros te "dan luz" (te apoyan) o te "apagan"?</label>
-      <input type="range" min="1" max="5" [(ngModel)]="formData.apoyo" class="slider">
-      <span>{{ formData.apoyo }}/5</span>
-    </div>
-    <div class="question">
-      <label>En el descanso, ¿te sientes parte del grupo o como un espectador en las gradas?</label>
-      <input type="range" min="1" max="5" [(ngModel)]="formData.grupo" class="slider">
-      <span>{{ formData.grupo }}/5</span>
-    </div>
-    <div class="question">
-      <label>¿Hay alguna materia o situación que te haga sentir que se te acaba la batería rápido?</label>
-      <textarea [(ngModel)]="formData.bateria" placeholder="Describe..."></textarea>
-    </div>
-    <img src="https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif" alt="School GIF" class="gif">
-    <button class="prev-btn" (click)="prevPage()">⬅️ Anterior</button>
-    <button class="next-btn" (click)="nextPage()">¡Siguiente Nivel! 🚀</button>
-  </div>
-
-  <!-- Page 3: Mundo Interior -->
-  <div *ngIf="currentPage === 3" class="page">
-    <h2>Nivel 3: Mundo Interior</h2>
-    <div class="question">
-      <label>¿A veces sientes que tu cabeza tiene demasiadas pestañas abiertas al mismo tiempo?</label>
-      <input type="range" min="1" max="5" [(ngModel)]="formData.pestanas" class="slider">
-      <span>{{ formData.pestanas }}/5</span>
-    </div>
-    <div class="question">
-      <label>¿Has sentido que necesitas "desaparecer" un ratico de todo el mundo?</label>
-      <input type="range" min="1" max="5" [(ngModel)]="formData.desaparecer" class="slider">
-      <span>{{ formData.desaparecer }}/5</span>
-    </div>
-    <div class="question">
-      <label>¿Qué tan seguido sientes que "no encajas" en el rompecabezas de tu grupo?</label>
-      <input type="range" min="1" max="5" [(ngModel)]="formData.encajar" class="slider">
-      <span>{{ formData.encajar }}/5</span>
-    </div>
-    <div class="question">
-      <label>Cuando algo te sale mal, ¿eres tu mejor amigo o tu peor crítico?</label>
-      <input type="range" min="1" max="5" [(ngModel)]="formData.critico" class="slider">
-      <span>{{ formData.critico }}/5</span>
-    </div>
-    <div class="question">
-      <label>¿Has tenido algún "nudo en la garganta" que no has podido soltar esta semana?</label>
-      <input type="range" min="1" max="5" [(ngModel)]="formData.nudo" class="slider">
-      <span>{{ formData.nudo }}/5</span>
-    </div>
-    <img src="https://media.giphy.com/media/3o7TKz9bX9Z9Z9Z9Z9/giphy.gif" alt="Thinking GIF" class="gif">
-    <button class="prev-btn" (click)="prevPage()">⬅️ Anterior</button>
-    <button class="next-btn" (click)="nextPage()">¡Siguiente Nivel! 🚀</button>
-  </div>
-
-  <!-- Page 4: Red de Apoyo y Futuro -->
-  <div *ngIf="currentPage === 4" class="page">
-    <h2>Nivel 4: Red de Apoyo y Futuro</h2>
-    <div class="question">
-      <label>Si tuvieras un problema grave a las 2 a.m., ¿tienes a quién llamar sin miedo?</label>
-      <input type="range" min="1" max="5" [(ngModel)]="formData.llamar" class="slider">
-      <span>{{ formData.llamar }}/5</span>
-    </div>
-    <div class="question">
-      <label>Del 1 al 10, ¿qué tanto te asusta el "después del colegio"?</label>
-      <input type="range" min="1" max="10" [(ngModel)]="formData.asusta" class="slider">
-      <span>{{ formData.asusta }}/10</span>
-    </div>
-    <div class="question">
-      <label>¿Sientes que alguien realmente te escucha cuando hablas, o solo te oyen?</label>
-      <input type="range" min="1" max="5" [(ngModel)]="formData.escucha" class="slider">
-      <span>{{ formData.escucha }}/5</span>
-    </div>
-    <img src="https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif" alt="Support GIF" class="gif">
-    <button class="prev-btn" (click)="prevPage()">⬅️ Anterior</button>
-    <button class="next-btn" (click)="nextPage()">¡Último Nivel! 🚀</button>
-  </div>
-
-  <!-- Page 5: Caja de Secretos -->
-  <div *ngIf="currentPage === 5" class="page">
-    <h2>Nivel 5: La Caja de Secretos</h2>
-    <div class="question">
-      <label>Escribe una frase, una canción o un meme que resuma lo que sientes y que nadie más sabe.</label>
-      <textarea [(ngModel)]="formData.secreto" placeholder="Tu secreto aquí..."></textarea>
-    </div>
-    <div class="question">
-      <label>Si pudieras cambiar una sola cosa de tu día a día para ser más feliz, ¿qué sería?</label>
-      <textarea [(ngModel)]="formData.cambiar" placeholder="¿Qué cambiarías?"></textarea>
-    </div>
-    <img src="https://media.giphy.com/media/3o7TKz9bX9Z9Z9Z9Z9/giphy.gif" alt="Secret GIF" class="gif">
-    <button class="prev-btn" (click)="prevPage()">⬅️ Anterior</button>
-    <button class="submit-btn" (click)="submitForm()">¡Enviar Respuestas! 🎉</button>
-  </div>
-
-  <div *ngIf="submitted" class="thank-you">
-    <h2>¡Gracias por compartir! 🙏</h2>
-    <p>Tus respuestas son importantes para nosotros.</p>
+    <!-- Botón continuar -->
+    <button 
+      class="continue-btn" 
+      (click)="continuar()"
+      [disabled]="!selectedClima || !selectedEmoji">
+      Continuar →
+    </button>
   </div>
 </div>
