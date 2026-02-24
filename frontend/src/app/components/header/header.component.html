@@ -19,6 +19,7 @@
     <div class="dropdown">
       <select class="dropdown-select" (change)="onSelectChange($event)">
         <option value="">{{ user?.name || 'Usuario' }}</option>
+        <option value="cambiar-password">Cambiar Contraseña</option>
         <option value="logout">Cerrar Sesión</option>
       </select>
     </div>

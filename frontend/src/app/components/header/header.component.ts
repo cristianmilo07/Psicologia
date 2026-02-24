@@ -31,6 +31,8 @@ export class HeaderComponent {
     const target = event.target as HTMLSelectElement;
     if (target.value === 'logout') {
       this.logout();
+    } else if (target.value === 'cambiar-password') {
+      this.router.navigate(['/cambiar-password']);
     }
   }
 }

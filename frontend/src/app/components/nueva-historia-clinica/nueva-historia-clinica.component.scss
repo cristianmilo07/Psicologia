@@ -342,6 +342,25 @@
   }
 }
 
+.btn-excel {
+  background: #217346;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 25px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 15px;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(33, 115, 70, 0.4);
+  }
+}
+
 .btn-add {
   background: var(--primary-green);
   color: white;

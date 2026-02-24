@@ -67,5 +67,12 @@ export class AuthService {
   getCurrentUser(): User | null {
     return this.currentUserSubject.value;
   }
+
+  changePassword(currentPassword: string, newPassword: string): Observable<{ message: string }> {
+    return this.http.put<{ message: string }>(`${this.apiUrl}/auth/change-password`, 
+      { currentPassword, newPassword }, 
+      { headers: { Authorization: `Bearer ${this.getToken()}` } }
+    );
+  }
 }
 

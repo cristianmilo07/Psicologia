@@ -2,14 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const path = require('path');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const historiasRoutes = require('./routes/historias');
 const reportesEmocionalesRoutes = require('./routes/reportes-emocionales');
 const atencionesGrupalesRoutes = require('./routes/atenciones-grupales');
 const citasRoutes = require('./routes/citas');
-const bcrypt = require('bcryptjs');
-const User = require('./models/User');
 
 dotenv.config();
 
@@ -21,24 +20,7 @@ const mongoURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/kidspsicolo
 mongoose.connect(mongoURI)
 .then(async () => {
   console.log('Connected to MongoDB');
-  try {
-    const existingUser = await User.findOne({ email: 'admin@kidspsicologo.com' });
-    if (!existingUser) {
-      const hashedPassword = await bcrypt.hash('admin123', 10);
-      const defaultUser = new User({
-        email: 'admin@kidspsicologo.com',
-        password: hashedPassword,
-        name: 'Administrador',
-        role: 'admin'
-      });
-      await defaultUser.save();
-      console.log('Default admin user created');
-    } else {
-      console.log('Default admin user already exists');
-    }
-  } catch (error) {
-    console.error('Error seeding default user:', error);
-  }
+  // Nota: Para cambiar la contraseña del admin, usa el endpoint /api/auth/change-password
 })
 .catch(err => console.error('MongoDB connection error:', err));
 
@@ -46,6 +28,9 @@ mongoose.connect(mongoURI)
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve static files from uploads directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes
 app.use('/api/auth', authRoutes);

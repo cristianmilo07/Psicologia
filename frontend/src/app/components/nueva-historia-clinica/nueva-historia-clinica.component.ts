@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-nueva-historia-clinica',
@@ -237,6 +238,90 @@ export class NuevaHistoriaClinicaComponent {
   aceptarSuccess() {
     this.showSuccessModal = false;
     this.router.navigate(['/historia-clinica']);
+  }
+
+  exportarExcel(): void {
+    const formValue = this.historiaClinicaForm.value;
+    const fechaActual = new Date().toLocaleDateString('es-CO').replace(/\//g, '-');
+
+    // Preparar datos para Excel
+    const datos: any = {
+      'Información del Paciente': {},
+      'Datos Personales': {},
+      'Información Clínica': {},
+      'Sesiones': []
+    };
+
+    // Información del Paciente
+    datos['Información del Paciente'] = {
+      'Nombre del Paciente': formValue.nombrePaciente || '',
+      'Fecha de Nacimiento': formValue.fechaNacimiento || '',
+      'Género': formValue.genero || '',
+      'Grado Escolar': formValue.gradoPaciente || '',
+      'Dirección': formValue.direccion || '',
+      'Teléfono': formValue.telefono || '',
+      'Email': formValue.email || '',
+      'Nivel de Riesgo': formValue.nivelRiesgo || ''
+    };
+
+    // Acompañamiento
+    datos['Datos Personales'] = {
+      'Tipo de Acompañamiento': formValue.acompanamiento || '',
+      'Descripción Acompañamiento': formValue.descripcionAcompanamientoPadre || '',
+      'Nombre del Padre': formValue.nombrePadre || '',
+      'Nombre de la Madre': formValue.nombreMadre || '',
+      'Nombre del Acudiente': formValue.nombreAcudiente || '',
+      'Parentesco': formValue.parentescoAcudiente || '',
+      'Hermanos en el Colegio': formValue.tieneHermanosColegio || '',
+      'Grado del Hermano': formValue.gradoHermano || ''
+    };
+
+    // Información Clínica
+    datos['Información Clínica'] = {
+      'Motivo de Consulta': formValue.motivoConsulta || '',
+      'Antecedentes Médicos': formValue.antecedentesMedicos || '',
+      'Síntomas Actuales': formValue.sintomasActuales || '',
+      'Diagnóstico': formValue.diagnostico || '',
+      'Plan de Tratamiento': formValue.planTratamiento || '',
+      'Notas': formValue.notas || ''
+    };
+
+    // Sesiones de Terapia
+    if (formValue.sesiones && formValue.sesiones.length > 0) {
+      formValue.sesiones.forEach((sesion: any, index: number) => {
+        datos['Sesiones'].push({
+          'Sesión #': index + 1,
+          'Fecha': sesion.fecha || '',
+          'Tipo': sesion.tipo || '',
+          'Notas': sesion.notas || '',
+          'Objetivos': sesion.objetivos || '',
+          'Progreso': sesion.progreso || ''
+        });
+      });
+    }
+
+    // Crear libro de Excel
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+
+    // Agregar cada sección como una hoja
+    Object.keys(datos).forEach(sheetName => {
+      const sheetData = datos[sheetName];
+      if (Array.isArray(sheetData)) {
+        // Es un array (sesiones)
+        const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(sheetData);
+        XLSX.utils.book_append_sheet(wb, ws, sheetName.substring(0, 31));
+      } else {
+        // Es un objeto (datos simples)
+        const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet([sheetData]);
+        XLSX.utils.book_append_sheet(wb, ws, sheetName.substring(0, 31));
+      }
+    });
+
+    // Generar nombre del archivo
+    const nombreArchivo = `historia-clinica-${formValue.nombrePaciente || 'sin-nombre'}-${fechaActual}.xlsx`.replace(/\s+/g, '-').toLowerCase();
+
+    // Descargar archivo
+    XLSX.writeFile(wb, nombreArchivo);
   }
 }
 

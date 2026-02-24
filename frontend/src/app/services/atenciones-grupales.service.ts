@@ -12,6 +12,7 @@ export interface AtencionGrupal {
   objetivos?: string;
   actividades?: string;
   observaciones?: string;
+  imagenes?: string[];
   createdBy?: string;
   createdAt?: string;
   updatedAt?: string;
@@ -24,12 +25,20 @@ export class AtencionesGrupalesService {
   private http = inject(HttpClient);
   private authService = inject(AuthService);
   private apiUrl = 'http://localhost:3000/api/atenciones-grupales';
+  private baseUrl = 'http://localhost:3000';
 
   private getHeaders(): HttpHeaders {
     const token = this.authService.getToken();
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
+    });
+  }
+
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.authService.getToken();
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
     });
   }
 
@@ -55,5 +64,28 @@ export class AtencionesGrupalesService {
 
   eliminarAtencion(id: string): Observable<{ message: string }> {
     return this.http.delete<{ message: string }>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+  }
+
+  subirImagenes(id: string, archivos: File[]): Observable<{ message: string; imagenes: string[]; atencion: AtencionGrupal }> {
+    const formData = new FormData();
+    archivos.forEach(archivo => {
+      formData.append('imagenes', archivo);
+    });
+    return this.http.post<{ message: string; imagenes: string[]; atencion: AtencionGrupal }>(
+      `${this.apiUrl}/${id}/upload-images`,
+      formData,
+      { headers: this.getAuthHeaders() }
+    );
+  }
+
+  eliminarImagen(id: string, imageIndex: number): Observable<{ message: string; atencion: AtencionGrupal }> {
+    return this.http.delete<{ message: string; atencion: AtencionGrupal }>(
+      `${this.apiUrl}/${id}/images/${imageIndex}`,
+      { headers: this.getHeaders() }
+    );
+  }
+
+  getImageUrl(relativePath: string): string {
+    return `${this.baseUrl}/${relativePath}`;
   }
 }
